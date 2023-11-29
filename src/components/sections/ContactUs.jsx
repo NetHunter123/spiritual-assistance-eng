@@ -36,15 +36,13 @@ const ContactUs = ({ contacts }) => {
           >
             <div className="text-left max-md:text-center max-lg:mb-[15px] mb-[35px]">
               <h3 className="title  relative z-10 text-left max-md:mb-[20px] text-center">
-                Контакты для связи с поддержкой
+              Contacts for contacting support
               </h3>
               <p className="sub-title  relative z-20 text-left mb-0 text-center mb-[20px]">
-                Ответим и проконсультируем по любым вопросам, помните, нет такой
-                ситуации, которую нельзя решить!
+                We will answer and advise on any questions, remember, there is no situation that can not be solved!
               </p>
               <p className={"infoText  font-bold text-center"}>
-                Чтобы связаться с нами, отправьте нам сообщение любым удобным
-                для Вас способом.
+              To contact us, send us a message in any convenient way.
               </p>
               {/*<p className={"infoText font-bold text-center"}>Контакты для связи со мной:</p>*/}
             </div>
@@ -66,7 +64,7 @@ const ContactUs = ({ contacts }) => {
                   </div>
                 );
               })}
-              <p>или свяжитесь с нами по почте:</p>
+              <p>or contact us by mail:</p>
               <a href="mailto:appsupport247@gmail.com">
                 appsupport247@gmail.com
               </a>

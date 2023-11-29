@@ -32,8 +32,8 @@ const Hero = () => {
                 "infoText text-[18px] lg:text-s22 mb-[25px] max-md:text-center"
               }
             >
-              Здравствуйте, это приложение которое поможет найти решение вашей
-              проблемы или ответить на ваши вопросы
+              Hello, this is an app that will help you find a solution to your
+              problem or answer your questions
             </p>
             <div className="photo mb-[20px] md:hidden">
               {/* <Image
@@ -65,7 +65,7 @@ const Hero = () => {
                 "infoText max-[768px]:mb-5 text-[16px] lg:text-[18px] font-bold md:mb-[20px] lg:mb-[40px] text-center"
               }
             >
-              Для решения или обсуждения проблемы свяжитесь с одним из Медиумом
+              To resolve or discuss a problem, contact one of the Mediums
             </p>
 
             <div className="info__btn flex justify-center gap-[20px] lg:gap-[40px] max-md:mb-0 mb-[60px] ">
@@ -78,7 +78,7 @@ const Hero = () => {
               <div className="relative">
                 <div className="animate-ping max-w-[200px] absolute top-[0px] bottom-0 left-0 right-0 bg-primary rounded-[10px] z-0 "></div>
                 <Button
-                  text={"Записатся на сеанс!"}
+                  text={"Book a session!"}
                   link={"#"}
                   place={"hero"}
                 />

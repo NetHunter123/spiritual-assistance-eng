@@ -37,11 +37,11 @@ const Payment = ({}) => {
           >
             <div className="text-left max-md:text-center max-lg:mb-[15px] mb-[35px]">
               <h3 className="title relative z-10 text-left max-md:mb-[20px] text-center font-[400]">
-                Как оплатить наши услуги
+                How to pay for our services
               </h3>
               <p className="sub-title relative z-20 text-left mb-0 text-center mb-[10px]">
-                Оплатить наши услуги можно любым удобным для вас способом, для
-                етого нажмите на кнопку оплаты ниже
+                You can pay for our services in any convenient way for you, for
+                this click on the payment button below
               </p>
               {/* <p className={"infoText font-bold text-center"}>
                 Чтобы связаться с нами, отправьте нам сообщение любым удобным
@@ -55,7 +55,7 @@ const Payment = ({}) => {
                 className={`animate-bounce block text-center   bg-primary text-textBlack h-btn text-[22px] min-w-[260px] w-[100%]  px-[10px] rounded-md leading-btn font-medium`}
                 href={`#`}
               >
-                {"Оплата"}
+                {"Payment"}
               </a>
             </div>
           </div>

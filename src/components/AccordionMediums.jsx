@@ -74,7 +74,8 @@ const AccordionMediums = ({ mediums }) => {
                   <div className="h-[150px] max-w-[150px] max-xs:h-[100px] max-xs:max-w-[100px] w-[100%] bg-[#ffffff] rounded-[75px] ml-[50px] max-sm:ml-[30px] max-xs:ml-[0] overflow-hidden">
                     <Image
                       width={!xsfm ? 100 : 150}
-                      fit={"contain"}
+                      height={!xsfm ? 100 : 150}
+                      fit={"cover"}
                       withPlaceholder
                       src={`${medium.avatar}`}
                       alt={medium.name}
@@ -116,7 +117,7 @@ const AccordionMediums = ({ mediums }) => {
                   className="ripple flex leading-[15px] items-center relative cursor-pointer font-[500] w-fit py-[8px] px-[10px] rounded-[8px] mt-[25px] bg-primary text-[black]"
                   href={medium.chats[1].link}
                 >
-                  Связаться с медиумом
+                  Contact Medium
                   <span className="flex ml-[5px] items-center h-[15px] overflow-hidden">
                     <span className="  text-[30px] mb-[2px]">→</span>
                   </span>
