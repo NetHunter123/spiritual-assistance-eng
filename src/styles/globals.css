@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*:root {*/
+/*    --foreground-rgb: 0, 0, 0;*/
+/*    --background-start-rgb: 214, 219, 220;*/
+/*    --background-end-rgb: 255, 255, 255;*/
+/*}*/
+
+/*@media (prefers-color-scheme: dark) {*/
+/*    :root {*/
+/*        --foreground-rgb: 255, 255, 255;*/
+/*        --background-start-rgb: 0, 0, 0;*/
+/*        --background-end-rgb: 0, 0, 0;*/
+/*        --background: #333*/
+/*    }*/
+/*}*/
+
+@layer components {
+  .infoText {
+    @apply text-s18 font-[300];
+  }
+
+  .container {
+    @apply max-w-[1030px] w-full mx-auto px-[15px];
+  }
+
+  .anchor {
+    display: block;
+    position: relative;
+    top: -130px;
+    visibility: hidden;
+  }
+
+  .title {
+    line-height: 36px;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .sub-title {
+    text-align: center;
+    line-height: 25px;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 45px;
+  }
+  .remark {
+    line-height: 19px;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+  }
+  .reviews-title_wrapper {
+    position: relative;
+  }
+  .reviews-title_wrapper:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -310px;
+    background-image: url("/reviewsTop.png");
+    background-position: left;
+    width: 300px;
+    height: 222px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth !important;
+}
+
+.ripple {
+  animation: ripple 1500ms infinite;
+}
+.zoom {
+  animation: zoom 2000ms infinite;
+}
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0px #c98d4e, 0 0 0 0px #ffffffc4, 0 0 0 0px #c98d4e,
+      0 0 0 0px #ffffffa3, 0 0 0 0px #c98d4e, 0 0 0 0px #ffffff9c,
+      0 0 0 0px #c98d4e, 0 0 0 0px #ffffff81;
+  }
+  50% {
+    box-shadow: 0 0 0 4px #c98e4eb8, 0 0 0 5px rgba(255, 255, 255, 0),
+      0 0 0 8px #c98e4ec7, 0 0 0 9px rgba(255, 255, 255, 0),
+      0 0 0 10px #c98e4e8c, 0 0 0 11px rgba(255, 255, 255, 0),
+      0 0 0 12px #e3be958c, 0 0 0 13px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0px #c98d4e, 0 0 0 0px #ffffffc4, 0 0 0 0px #c98d4e,
+      0 0 0 0px #ffffffa3, 0 0 0 0px #c98d4e, 0 0 0 0px #ffffff9c,
+      0 0 0 0px #c98d4e, 0 0 0 0px #ffffff81;
+  }
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(0.95, 0.95);
+  }
+  50% {
+    transform: scale(1.1, 1.1);
+  }
+  100% {
+    transform: scale(0.95, 0.95);
+  }
+}
