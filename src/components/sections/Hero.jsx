@@ -43,7 +43,7 @@ const Hero = () => {
                 src="./firstPhoto.jpg"
                 alt="Main Photo"
               /> */}
-              <div className="animate-[spin_40s_linear_infinite] z-[0]">
+              <div className="relative animate-[spin_40s_linear_infinite] z-[0]">
                 <Image
                   height={lg ? 384 : md ? 314 : 300}
                   width={lg ? 384 : md ? 314 : 300}
@@ -51,6 +51,15 @@ const Hero = () => {
                   src="./animateCircle.png"
                   alt="animation"
                 />
+                <div className="absolute left-0 top-0 right-0 bottom-0 flex justify-center items-center">
+                <Image
+                  height={lg ? 314 : md ? 230 : 230}
+                  width={lg ? 314 : md ? 230 : 230}
+                  withPlaceholder
+                  src="./app-logo.webp"
+                  alt="animation"
+                />
+                </div>
               </div>
             </div>
             {/* <p
@@ -89,7 +98,7 @@ const Hero = () => {
           <div className="photo hidden md:block">
             {/* <Image width={lg ? 384 : md ? 314 : 300} fit={"contain"} withPlaceholder src='./firstPhoto.jpg'
                    alt="Main Photo"/> */}
-            <div className="animate-[spin_40s_linear_infinite] z-[0]">
+            <div className="relative animate-[spin_40s_linear_infinite] z-[0]">
               <Image
                 height={lg ? 384 : md ? 314 : 300}
                 width={lg ? 384 : md ? 314 : 300}
@@ -97,6 +106,15 @@ const Hero = () => {
                 src="./animateCircle.png"
                 alt="animation"
               />
+              <div className="absolute left-0 top-0 right-0 bottom-0 flex justify-center items-center">
+                <Image
+                  height={lg ? 314 : md ? 230 : 200}
+                  width={lg ? 314 : md ? 230 : 200}
+                  withPlaceholder
+                  src="./app-logo.webp"
+                  alt="animation"
+                />
+                </div>
             </div>
           </div>
         </div>
