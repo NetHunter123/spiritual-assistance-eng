@@ -17,12 +17,12 @@ const Services = () => {
       chats: [
         {
           text: "WhatsApp",
-          link: "https://www.instagram.com/anna_astachowa/",
+          link: "https://wa.me/918001184963",
           icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
         },
         {
           text: "Telegram",
-          link: "https://t.me/astachowa_anna",
+          link: "https://t.me/+919668310153",
           icon: <IconBrandTelegram strokeWidth={1.7} size={rem(40)} />,
         },
       ],
@@ -35,12 +35,12 @@ const Services = () => {
       chats: [
         {
           text: "WhatsApp",
-          link: "https://www.instagram.com/anna_astachowa/",
+          link: "https://wa.me/918001184963",
           icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
         },
         {
           text: "Telegram",
-          link: "https://t.me/astachowa_anna",
+          link: "https://t.me/+919668310153",
           icon: <IconBrandTelegram strokeWidth={1.7} size={rem(40)} />,
         },
       ],
@@ -53,12 +53,12 @@ const Services = () => {
       chats: [
         {
           text: "WhatsApp",
-          link: "https://www.instagram.com/anna_astachowa/",
+          link: "https://wa.me/918001184963",
           icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
         },
         {
           text: "Telegram",
-          link: "https://t.me/astachowa_anna",
+          link: "https://t.me/+919668310153",
           icon: <IconBrandTelegram strokeWidth={1.7} size={rem(40)} />,
         },
       ],
@@ -71,12 +71,12 @@ const Services = () => {
       chats: [
         {
           text: "WhatsApp",
-          link: "https://www.instagram.com/anna_astachowa/",
+          link: "https://wa.me/918001184963",
           icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
         },
         {
           text: "Telegram",
-          link: "https://t.me/astachowa_anna",
+          link: "https://t.me/+919668310153",
           icon: <IconBrandTelegram strokeWidth={1.7} size={rem(40)} />,
         },
       ],

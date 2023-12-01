@@ -1,0 +1,2660 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "A-Pay",
+    "description": "A-Pay\n\nAuthorization in A-Pay can occur using two parameters `apikey` and `project_id`.",
+    "version": "0.0.5"
+  },
+  "servers": [
+    {
+      "url": "https://pay-crm.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Payment system",
+      "description": "Payment systems"
+    },
+    {
+      "name": "Deposit",
+      "description": "Deposits"
+    },
+    {
+      "name": "Withdrawal",
+      "description": "Withdrawals"
+    },
+    {
+      "name": "Webhooks"
+    }
+  ],
+  "paths": {
+    "/Remotes/payment-systems-info": {
+      "get": {
+        "tags": [
+          "Payment system"
+        ],
+        "summary": "Getting data about payment systems",
+        "description": "Getting data about payment systems for the project.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "project_id",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Project ID in the A-Pay system",
+            "example": 123,
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Success",
+                      "required": [
+                        "success",
+                        "payment_systems"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true,
+                          "description": "`true` if there are no errors"
+                        },
+                        "payment_systems": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "description": "Information about payment system",
+                            "required": [
+                              "name",
+                              "min_deposit",
+                              "max_deposit",
+                              "min_withdrawal",
+                              "max_withdrawal"
+                            ],
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "example": "mpesa",
+                                "enum": [
+                                  "mpesa",
+                                  "easypaisa",
+                                  "easypaisa_v",
+                                  "bankalfalah",
+                                  "upi_fast",
+                                  "upi_fast_v",
+                                  "upi_arf",
+                                  "upi_ars",
+                                  "paytm_s",
+                                  "nagad",
+                                  "bkash",
+                                  "bkash_a",
+                                  "upi_p2p",
+                                  "apaybdt",
+                                  "upay",
+                                  "nagad_api_v",
+                                  "payme",
+                                  "paytm",
+                                  "phonepe",
+                                  "upi_a",
+                                  "upi_fr",
+                                  "upi_p",
+                                  "upi_b"
+                                ],
+                                "description": "Payment system ID connected to the project"
+                              },
+                              "min_deposit": {
+                                "type": "number",
+                                "example": 10,
+                                "description": "Minimum deposit amount"
+                              },
+                              "max_deposit": {
+                                "type": "number",
+                                "example": 10000,
+                                "description": "Maximum deposit amount"
+                              },
+                              "min_withdrawal": {
+                                "type": "number",
+                                "example": 10,
+                                "description": "Minimum withdrawal amount"
+                              },
+                              "max_withdrawal": {
+                                "type": "number",
+                                "example": 10000,
+                                "description": "Maximum withdrawal amount"
+                              },
+                              "currency": {
+                                "type": "string",
+                                "example": "INR",
+                                "description": "Payment system currency"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "title": "Error",
+                      "required": [
+                        "success",
+                        "message",
+                        "code"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false,
+                          "description": "`false` if an error occurred"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid request",
+                          "description": "Description of error"
+                        },
+                        "code": {
+                          "type": "number",
+                          "example": 400,
+                          "description": "Error code in the A-pay system"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apikey": []
+          }
+        ]
+      }
+    },
+    "/Remotes/create-deposit": {
+      "post": {
+        "tags": [
+          "Deposit"
+        ],
+        "summary": "Request to create a deposit",
+        "description": "Deposit creation.\n\nWhen the deposit is confirmed, a callback request will be sent to the client's application handler with the [Deposit webhook](#operation/DepositWebhook) body",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "project_id",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Project ID in the A-Pay system",
+            "example": 123,
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "amount",
+                  "currency",
+                  "payment_system",
+                  "data"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "description": "Deposit amount",
+                    "example": 10
+                  },
+                  "currency": {
+                    "type": "string",
+                    "example": "INR"
+                  },
+                  "payment_system": {
+                    "type": "string",
+                    "enum": [
+                      "mpesa",
+                      "easypaisa",
+                      "easypaisa_v",
+                      "bankalfalah",
+                      "upi_fast",
+                      "upi_fast_v",
+                      "upi_arf",
+                      "upi_ars",
+                      "paytm_s",
+                      "nagad",
+                      "bkash",
+                      "bkash_a",
+                      "upi_p2p",
+                      "apaybdt",
+                      "upay",
+                      "nagad_api_v",
+                      "payme",
+                      "paytm",
+                      "phonepe",
+                      "upi_a",
+                      "upi_fr",
+                      "upi_p",
+                      "upi_b"
+                    ],
+                    "example": "mpesa",
+                    "description": "Name of the payment system in A-Pay"
+                  },
+                  "custom_transaction_id": {
+                    "type": "string",
+                    "maximum": 200,
+                    "example": "custom123",
+                    "description": "Transaction ID in the client's system"
+                  },
+                  "custom_user_id": {
+                    "type": "string",
+                    "maximum": 200,
+                    "example": "user123",
+                    "description": "User ID in the client's system"
+                  },
+                  "data": {
+                    "description": "Data depending on the specific payment system",
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "description": "Mpesa data",
+                        "title": "mpesa",
+                        "properties": {
+                          "phone_number": {
+                            "type": "string",
+                            "minimum": 12,
+                            "maximum": 12,
+                            "pattern": "^254[0-9]{9}$",
+                            "example": 254712345678,
+                            "description": "Phone number Safariccon for money sending. Should consist of 12 digits and start with 254"
+                          }
+                        },
+                        "required": [
+                          "phone_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Easypaisa data",
+                        "title": "easypaisa",
+                        "properties": {
+                          "email": {
+                            "type": "string",
+                            "example": "user@example.com",
+                            "description": "User email address"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 123456789,
+                            "pattern": "^[0-9]{8,16}$",
+                            "minimum": 8,
+                            "maximum": 16,
+                            "description": "Account number"
+                          }
+                        },
+                        "required": [
+                          "email",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Easypaisa data",
+                        "title": "easypaisa_v",
+                        "properties": {
+                          "email": {
+                            "type": "string",
+                            "example": "user@example.com",
+                            "description": "User email address"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 123456789,
+                            "pattern": "^[0-9]{8,16}$",
+                            "minimum": 8,
+                            "maximum": 16,
+                            "description": "Account number"
+                          }
+                        },
+                        "required": [
+                          "email",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Nagad API V",
+                        "title": "nagad_api_v",
+                        "properties": {
+                          "account_number": {
+                            "type": "string",
+                            "example": 12345678912,
+                            "pattern": "^[0-9]{11,11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Account number"
+                          }
+                        },
+                        "required": [
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "BankAlfalah data",
+                        "title": "bankalfalah",
+                        "properties": {
+                          "return_url": {
+                            "type": "string",
+                            "description": "Return link to the user's shop after the payment page"
+                          }
+                        },
+                        "required": [
+                          "return_url"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI Fast data (empty)\n\nFor example: `\"data\": {}`",
+                        "title": "upi_fast",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI Fast V data",
+                        "title": "upi_fast_v",
+                        "properties": {
+                          "upi_address": {
+                            "type": "string",
+                            "description": "UPI address"
+                          }
+                        },
+                        "required": [
+                          "upi_address"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI ARF data",
+                        "title": "upi_arf",
+                        "properties": {
+                          "description": {
+                            "type": "string",
+                            "maximum": 2048,
+                            "description": "Short deposit description on the payment page"
+                          },
+                          "return_url": {
+                            "type": "string",
+                            "description": "Return link to the user's shop after the payment page"
+                          }
+                        },
+                        "required": [
+                          "description",
+                          "return_url"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI ARS data (empty)\n\nFor example: `\"data\": {}`",
+                        "title": "upi_ars",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "description": "PAYTM S data (empty)\n\nFor example: `\"data\": {}`",
+                        "title": "paytm_s",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "description": "Nagad data (empty)\n\nThis deposit requires activation [Deposit activation](#operation/DepositActivation)\n\nFor example: `\"data\": {}`",
+                        "title": "nagad",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "description": "BKash data (empty)\n\nThis deposit requires activation [Deposit activation](#operation/DepositActivation)\n\nFor example: `\"data\": {}`",
+                        "title": "bkash",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "title": "bkash_a",
+                        "description": "[Deposit activation](#operation/DepositActivation) is optional",
+                        "properties": {
+                          "": {
+                            "type": "Description:",
+                            "description": "[Deposit activation](#operation/DepositActivation) is optional"
+                          },
+                          "return_url": {
+                            "type": "string",
+                            "description": "Return link to the user's shop after the payment page"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 123456789,
+                            "pattern": "^[0-9]{8,16}$",
+                            "minimum": 8,
+                            "maximum": 16,
+                            "description": "Account number"
+                          }
+                        },
+                        "required": [
+                          "return_url"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI-p2p data (empty)\n\nThis deposit requires activation [Deposit activation](#operation/DepositActivation)\n\nFor example: `\"data\": {}`",
+                        "title": "upi_p2p",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "description": "PayTM data (empty)\n\nThis deposit requires activation [Deposit activation](#operation/DepositActivation)\n\nFor example: `\"data\": {}`",
+                        "title": "paytm",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "description": "PhonePe data (empty)\n\nThis deposit requires activation [Deposit activation](#operation/DepositActivation)\n\nFor example: `\"data\": {}`",
+                        "title": "phonepe",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "description": "ApayBDT data",
+                        "title": "apaybdt",
+                        "properties": {
+                          "success_url": {
+                            "type": "string",
+                            "example": "https://clientstore.com/success",
+                            "description": "Return link to the user's shop after the successful payment"
+                          },
+                          "cancel_url": {
+                            "type": "string",
+                            "example": "https://clientstore.com/success",
+                            "description": "Return link to the user's shop after the canceled payment"
+                          },
+                          "fail_url": {
+                            "type": "string",
+                            "example": "https://clientstore.com/success",
+                            "description": "Return link to the user's shop after the failed payment"
+                          },
+                          "customer_name": {
+                            "type": "string",
+                            "example": "John Doe",
+                            "maximum": 30,
+                            "description": "Customer name"
+                          },
+                          "customer_email": {
+                            "type": "string",
+                            "example": "johndoe@gmail.com",
+                            "description": "Customer email"
+                          },
+                          "customer_phone": {
+                            "type": "string",
+                            "example": 123456789,
+                            "pattern": "^[0-9]{6,15}$",
+                            "minimum": 6,
+                            "maximum": 15,
+                            "description": "Customer phone"
+                          }
+                        },
+                        "required": [
+                          "success_url",
+                          "cancel_url",
+                          "fail_url",
+                          "customer_name",
+                          "customer_email",
+                          "customer_phone"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPAY data",
+                        "title": "upay",
+                        "properties": {
+                          "return_url": {
+                            "type": "string",
+                            "description": "Return link to the user's shop after the payment page"
+                          }
+                        },
+                        "required": [
+                          "return_url"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "title": "payme",
+                        "description": "Payme data",
+                        "properties": {
+                          "": {
+                            "type": "Description:",
+                            "description": "[Deposit activation](#operation/DepositActivation) is required"
+                          },
+                          "card_number": {
+                            "type": "string",
+                            "example": 1234123412341234,
+                            "pattern": "^[0-9]{16}$",
+                            "minimum": 16,
+                            "maximum": 16,
+                            "description": "Card number"
+                          },
+                          "card_expire": {
+                            "type": "string",
+                            "minimum": 4,
+                            "maximum": 4,
+                            "pattern": "^[0-9]{4}$",
+                            "example": "0399",
+                            "description": "Card expiry date. Format four numbers MMYY, where MM is the month, YY is the year"
+                          }
+                        },
+                        "required": [
+                          "card_number",
+                          "card_expire"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "title": "upi_a",
+                        "description": "Upi-a data",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "John Doe",
+                            "minimum": 1,
+                            "maximum": 100,
+                            "description": "Customer name"
+                          },
+                          "email": {
+                            "type": "string",
+                            "minimum": 1,
+                            "maximum": 100,
+                            "example": "johndoe@gmail.com",
+                            "description": "Customer email"
+                          },
+                          "phone_number": {
+                            "type": "string",
+                            "minimum": 10,
+                            "maximum": 12,
+                            "example": 91123456789,
+                            "pattern": "^[0-9]{10,12}$",
+                            "description": "Customer phone number"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "email",
+                          "phone_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Upi-fr data (empty)\n\nFor example: `\"data\": {}`",
+                        "title": "upi_fr",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "title": "upi_p",
+                        "description": "UPI-p data (empty)\n\nFor example: `\"data\": {}`",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI-b data",
+                        "title": "upi_b",
+                        "properties": {
+                          "return_url": {
+                            "type": "string",
+                            "description": "Return link to the user's shop after the payment page"
+                          }
+                        },
+                        "required": [
+                          "return_url"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Success",
+                      "required": [
+                        "success",
+                        "order_id"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true,
+                          "description": "`true` if there are no errors"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Pending",
+                            "Success",
+                            "Failed"
+                          ],
+                          "example": "Pending",
+                          "description": "Deposit status"
+                        },
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Deposit ID in the A-Pay system"
+                        },
+                        "data": {
+                          "type": "object",
+                          "description": "Payment system specific data",
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "description": "BankAlfalah data",
+                              "title": "bankalfalah",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "description": "Link to payment page"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "UPI Fast data",
+                              "title": "upi_fast",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "description": "UPI payment app deep link\n\nOur system, using the method Upi_fast, sends a link of the form `upi://`,\nwhich in theory should lead to the opening of the desired application on mobile OS.\nBut, on mobile OSs, there are cases when the universal link doesn't work and opens the wrong application.\nTo fix it you can use the solution on your side:\n[https://stackoverflow.com/questions/65273125/invoking-upi-apps-from-my-react-native-app-works-in-ios-but-not-in-android](https://stackoverflow.com/questions/65273125/invoking-upi-apps-from-my-react-native-app-works-in-ios-but-not-in-android),\ni.e. for the specified mobile applications write the exact link → replacing `upi://` from the link with the following data for mobile solutions:\n\n\n- `Paytm` → paytmmp://;\n- `Phonepe` → phonepe://;\n- `GPay` → tez://upi/.\n\n\nAnd let the user select the desired solution first and then get the link for the specific app."
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "UPI Fast V data",
+                              "title": "upi_fast_v",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "description": "UPI payment app deep link"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "UPI ARF data",
+                              "title": "upi_arf",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "description": "Link to payment page"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "UPI ARS data",
+                              "title": "upi_ars",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "description": "UPI payment app deep link"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "PAYTM S data",
+                              "title": "paytm_s",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "example": "upi://pay?pa=test@bank&pn=Test%20test&am=100&tn=IT32021661770570987&tr=IT32021661770570987",
+                                  "description": "UPI payment app deep link"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "Nagad data",
+                              "title": "nagad",
+                              "properties": {
+                                "identifier": {
+                                  "type": "string",
+                                  "example": 6234234234,
+                                  "description": "Recipient's wallet number"
+                                }
+                              },
+                              "required": [
+                                "identifier"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "BKash data",
+                              "title": "bkash",
+                              "properties": {
+                                "identifier": {
+                                  "type": "string",
+                                  "example": 6234234234,
+                                  "description": "Recipient's wallet number"
+                                }
+                              },
+                              "required": [
+                                "identifier"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "Paytm data",
+                              "title": "paytm",
+                              "properties": {
+                                "identifier": {
+                                  "type": "string",
+                                  "example": 6234234234,
+                                  "description": "Recipient's wallet number"
+                                }
+                              },
+                              "required": [
+                                "identifier"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "Phonepe data",
+                              "title": "phonepe",
+                              "properties": {
+                                "identifier": {
+                                  "type": "string",
+                                  "example": 6234234234,
+                                  "description": "Recipient's wallet number"
+                                }
+                              },
+                              "required": [
+                                "identifier"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "BKash_a data",
+                              "title": "bkash_a",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "description": "Link to payment page"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "UPI p2p data",
+                              "title": "upi_p2p",
+                              "properties": {
+                                "upi_address": {
+                                  "type": "string",
+                                  "description": "UPI address"
+                                }
+                              },
+                              "required": [
+                                "upi_address"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "ApayBDT data",
+                              "title": "apaybdt",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "description": "Link to payment page"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "UPAY data",
+                              "title": "upay",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "description": "Link to payment page"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "PayMe data",
+                              "title": "payme",
+                              "properties": {
+                                "sent": {
+                                  "type": "boolean"
+                                },
+                                "phone": {
+                                  "type": "string"
+                                },
+                                "wait": {
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "sent",
+                                "phone",
+                                "wait"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "Nagad API V data",
+                              "title": "nagad_api_v",
+                              "properties": {
+                                "receiver_account_number": {
+                                  "type": "string",
+                                  "description": "The recipient's account number to which user must transfer the  funds"
+                                }
+                              },
+                              "required": [
+                                "receiver_account_number"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "Upi-a data",
+                              "title": "upi_a",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "description": "Link to payment page"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "Upi-fr data",
+                              "title": "upi_fr",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "example": "upi://pay?pa=test@bank&pn=Test%20test&am=100&tn=IT32021661770570987&tr=IT32021661770570987",
+                                  "description": "UPI payment app deep link"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "Upi-p data",
+                              "title": "upi_p",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "example": "upi://pay?pa=test@bank&pn=Test%20test&am=100&tn=IT32021661770570987&tr=IT32021661770570987",
+                                  "description": "UPI payment app deep link"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "description": "UPI-b data",
+                              "title": "upi_b",
+                              "properties": {
+                                "paymentpage_url": {
+                                  "type": "string",
+                                  "description": "Link to payment page"
+                                }
+                              },
+                              "required": [
+                                "paymentpage_url"
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "title": "Error",
+                      "required": [
+                        "success",
+                        "message",
+                        "code"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false,
+                          "description": "`false` if an error occurred"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid request",
+                          "description": "Description of error"
+                        },
+                        "code": {
+                          "type": "number",
+                          "example": 400,
+                          "description": "Error code in the A-pay system"
+                        },
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Deposit ID in the A-Pay system"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apikey": []
+          }
+        ]
+      }
+    },
+    "/Remotes/deposit-activate": {
+      "post": {
+        "tags": [
+          "Deposit"
+        ],
+        "summary": "Deposit activation",
+        "operationId": "DepositActivation",
+        "description": "For payment system that require payment activation",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "project_id",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Project ID in the A-Pay system",
+            "example": 123,
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "order_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Deposit ID in the A-Pay system",
+            "example": "7fa13dbc3b79e05e",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "payment_system",
+                  "data"
+                ],
+                "properties": {
+                  "payment_system": {
+                    "type": "string",
+                    "enum": [
+                      "nagad",
+                      "bkash",
+                      "upi_p2p",
+                      "bkash_a",
+                      "payme",
+                      "paytm",
+                      "phonepe"
+                    ],
+                    "example": "nagad",
+                    "description": "Name of the payment system in A-Pay"
+                  },
+                  "data": {
+                    "description": "Data depending on the specific payment system",
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "description": "Nagad data",
+                        "title": "nagad",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "example": "123-ABC-456-DEF",
+                            "maximum": 190,
+                            "description": "A code on which activation is performed (Transaction ID), received from the user"
+                          }
+                        },
+                        "required": [
+                          "key"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "BKash data",
+                        "title": "bkash",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "example": "123-ABC-456-DEF",
+                            "maximum": 190,
+                            "description": "A code on which activation is performed (Transaction ID), received from the user"
+                          }
+                        },
+                        "required": [
+                          "key"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "title": "bkash_a",
+                        "description": "BKash_a data (empty)\n\nFor example: `\"data\": {}`",
+                        "example": {}
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI p2p data",
+                        "title": "upi_p2p",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "example": "123-ABC-456-DEF",
+                            "maximum": 190,
+                            "description": "A code on which activation is performed (Transaction ID), received from the user"
+                          }
+                        },
+                        "required": [
+                          "key"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "PayTM data",
+                        "title": "paytm",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "example": "123-ABC-456-DEF",
+                            "maximum": 190,
+                            "description": "A code on which activation is performed (Transaction ID), received from the user"
+                          }
+                        },
+                        "required": [
+                          "key"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "PhonePe data",
+                        "title": "phonepe",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "example": "123-ABC-456-DEF",
+                            "maximum": 190,
+                            "description": "A code on which activation is performed (Transaction ID), received from the user"
+                          }
+                        },
+                        "required": [
+                          "key"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Payme data",
+                        "title": "payme",
+                        "properties": {
+                          "otp_code": {
+                            "type": "string",
+                            "example": 666666,
+                            "pattern": "^[0-9]{6}$",
+                            "minimum": 6,
+                            "maximum": 6,
+                            "description": "Otp code can be entered several times.\nCheck the validity of the otp code by the `verify_otp` field in activation response.\n\nUse [Deposit resend OTP](#operation/DepositResendOTP) to resend  otp code."
+                          }
+                        },
+                        "required": [
+                          "otp_code"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Success",
+                      "required": [
+                        "success",
+                        "order_id"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true,
+                          "description": "`true` if there are no errors"
+                        },
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Deposit ID in the A-Pay system"
+                        },
+                        "data": {
+                          "type": "object",
+                          "description": "Payment system specific data",
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "description": "Payme data",
+                              "title": "payme",
+                              "properties": {
+                                "verify_otp": {
+                                  "type": "boolean",
+                                  "description": "Returns `true` if the otp code has passed verification, otherwise, client can enter the otp code again"
+                                }
+                              },
+                              "required": [
+                                "verify_otp"
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "title": "Error",
+                      "required": [
+                        "success",
+                        "message",
+                        "code"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false,
+                          "description": "`false` if an error occurred"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid request",
+                          "description": "Description of error"
+                        },
+                        "code": {
+                          "type": "number",
+                          "example": 400,
+                          "description": "Error code in the A-pay system"
+                        },
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Deposit ID in the A-Pay system"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apikey": []
+          }
+        ]
+      }
+    },
+    "/Remotes/deposit-resend-otp": {
+      "post": {
+        "tags": [
+          "Deposit"
+        ],
+        "summary": "Deposit resend OTP",
+        "operationId": "DepositResendOTP",
+        "description": "For payment systems that support resending OTP codes",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "project_id",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Project ID in the A-Pay system",
+            "example": 123,
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "order_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Deposit ID in the A-Pay system",
+            "example": "7fa13dbc3b79e05e",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "payment_system"
+                ],
+                "properties": {
+                  "payment_system": {
+                    "type": "string",
+                    "enum": [
+                      "payme"
+                    ],
+                    "example": "payme",
+                    "description": "Name of the payment system in A-Pay"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Success",
+                      "required": [
+                        "success",
+                        "order_id"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true,
+                          "description": "`true` if there are no errors"
+                        },
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Deposit ID in the A-Pay system"
+                        },
+                        "data": {
+                          "type": "object",
+                          "description": "Payment system specific data",
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "description": "PayMe data",
+                              "title": "payme",
+                              "properties": {
+                                "sent": {
+                                  "type": "boolean"
+                                },
+                                "phone": {
+                                  "type": "string"
+                                },
+                                "wait": {
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "sent",
+                                "phone",
+                                "wait"
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "title": "Error",
+                      "required": [
+                        "success",
+                        "message",
+                        "code"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false,
+                          "description": "`false` if an error occurred"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid request",
+                          "description": "Description of error"
+                        },
+                        "code": {
+                          "type": "number",
+                          "example": 400,
+                          "description": "Error code in the A-pay system"
+                        },
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Deposit ID in the A-Pay system"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apikey": []
+          }
+        ]
+      }
+    },
+    "/Remotes/deposit-info": {
+      "get": {
+        "tags": [
+          "Deposit"
+        ],
+        "summary": "Deposit information",
+        "description": "The data are taken from the table `deposit` by `order_id` field based on the selected project from the table `project`",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "project_id",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Project ID in the A-Pay system",
+            "example": 123,
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "order_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Deposit ID in the A-Pay system",
+            "example": "7fa13dbc3b79e05e",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Success",
+                      "required": [
+                        "success",
+                        "status",
+                        "order_id",
+                        "amount",
+                        "currency",
+                        "payment_system",
+                        "created_at"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true,
+                          "description": "`true` if there are no errors"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Pending",
+                            "Success",
+                            "Failed",
+                            "Rejected"
+                          ],
+                          "example": "Success",
+                          "description": "Deposit status"
+                        },
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Deposit ID in the A-Pay system"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "description": "Deposit amount",
+                          "example": 10
+                        },
+                        "currency": {
+                          "type": "string",
+                          "example": "INR"
+                        },
+                        "payment_system": {
+                          "type": "string",
+                          "example": "mpesa",
+                          "enum": [
+                            "mpesa",
+                            "easypaisa",
+                            "easypaisa_v",
+                            "bankalfalah",
+                            "upi_fast",
+                            "upi_fast_v",
+                            "upi_arf",
+                            "upi_ars",
+                            "paytm_s",
+                            "nagad",
+                            "bkash",
+                            "bkash_a",
+                            "upi_p2p",
+                            "apaybdt",
+                            "upay",
+                            "nagad_api_v",
+                            "payme",
+                            "paytm",
+                            "phonepe",
+                            "upi_a",
+                            "upi_fr",
+                            "upi_p",
+                            "upi_b"
+                          ],
+                          "description": "Name of the payment system in A-Pay"
+                        },
+                        "custom_transaction_id": {
+                          "type": "string",
+                          "minimum": 0,
+                          "maximum": 200,
+                          "example": "custom123",
+                          "description": "Transaction ID in the client's system"
+                        },
+                        "custom_user_id": {
+                          "type": "string",
+                          "minimum": 0,
+                          "maximum": 200,
+                          "example": "user123",
+                          "description": "User ID in the client's system"
+                        },
+                        "created_at": {
+                          "type": "integer",
+                          "example": 1665135515,
+                          "description": "Deposit creation time in timestamp format"
+                        }
+                      }
+                    },
+                    {
+                      "title": "Error",
+                      "required": [
+                        "success",
+                        "message",
+                        "code"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false,
+                          "description": "`false` if an error occurred"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid request",
+                          "description": "Description of error"
+                        },
+                        "code": {
+                          "type": "number",
+                          "example": 400,
+                          "description": "Error code in the A-pay system"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apikey": []
+          }
+        ]
+      }
+    },
+    "/Remotes/create-withdrawal": {
+      "post": {
+        "security": [
+          {
+            "apikey": []
+          }
+        ],
+        "tags": [
+          "Withdrawal"
+        ],
+        "summary": "Request to create a withdrawal",
+        "description": "Withdrawal creation.\n\nWhen the withdrawal is confirmed, a callback request will be sent to the client's application handler with the [Withdrawal webhook](#operation/WithdrawalWebhook) body",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "project_id",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Project ID in the A-Pay system",
+            "example": 123,
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "amount",
+                  "currency",
+                  "payment_system",
+                  "data"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "description": "Withdrawal amount",
+                    "example": 10
+                  },
+                  "currency": {
+                    "type": "string",
+                    "example": "INR"
+                  },
+                  "payment_system": {
+                    "type": "string",
+                    "enum": [
+                      "mpesa",
+                      "bankalfalah",
+                      "easypaisa",
+                      "easypaisa_v",
+                      "upi_fast",
+                      "upi_fast_v",
+                      "upi_arf",
+                      "upi_ars",
+                      "imps",
+                      "paytm_s",
+                      "nagad",
+                      "bkash",
+                      "bkash_a",
+                      "upi_p2p",
+                      "apaybdt",
+                      "upay",
+                      "payme",
+                      "nagad_api_v",
+                      "paytm"
+                    ],
+                    "example": "mpesa",
+                    "description": "Name of the payment system in A-Pay"
+                  },
+                  "custom_transaction_id": {
+                    "type": "string",
+                    "maximum": 200,
+                    "example": "custom123",
+                    "description": "Transaction ID in the client's system"
+                  },
+                  "custom_user_id": {
+                    "type": "string",
+                    "maximum": 200,
+                    "example": "user123",
+                    "description": "User ID in the client's system"
+                  },
+                  "data": {
+                    "description": "Data depending on the specific payment system",
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "description": "Bankalfalah data",
+                        "title": "bankalfalah",
+                        "properties": {
+                          "account_title": {
+                            "type": "string",
+                            "example": "John Doe",
+                            "maximum": 50,
+                            "description": "Receiver account name"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 12345678912345,
+                            "pattern": "^[0-9]{14,14}$",
+                            "minimum": 14,
+                            "maximum": 14,
+                            "description": "Account number"
+                          },
+                          "iban_number": {
+                            "type": "string",
+                            "maximum": 34,
+                            "example": null,
+                            "description": "IBAN number"
+                          }
+                        },
+                        "required": [
+                          "iban_number",
+                          "account_title",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Mpesa data",
+                        "title": "mpesa",
+                        "properties": {
+                          "phone_number": {
+                            "type": "string",
+                            "minimum": 12,
+                            "maximum": 12,
+                            "pattern": "^254[0-9]{9}$",
+                            "example": 254712345678,
+                            "description": "Phone number Safariccon for money sending. Should consist of 12 digits and start with 254"
+                          }
+                        },
+                        "required": [
+                          "phone_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Easypaisa data",
+                        "title": "easypaisa",
+                        "properties": {
+                          "wallet_type": {
+                            "type": "string",
+                            "enum": [
+                              "easypaisa",
+                              "jazzcash"
+                            ],
+                            "example": "easypaisa",
+                            "description": "Wallet type"
+                          },
+                          "account_name": {
+                            "type": "string",
+                            "example": "John Doe",
+                            "maximum": 50,
+                            "description": "Receiver account name"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 12345678912,
+                            "pattern": "^[0-9]{11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Account number"
+                          }
+                        },
+                        "required": [
+                          "wallet_type",
+                          "account_name",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Easypaisa data",
+                        "title": "easypaisa_v",
+                        "properties": {
+                          "wallet_type": {
+                            "type": "string",
+                            "enum": [
+                              "easypaisa_v",
+                              "jazzcash"
+                            ],
+                            "example": "easypaisa_5",
+                            "description": "Wallet type"
+                          },
+                          "account_name": {
+                            "type": "string",
+                            "example": "John Doe",
+                            "maximum": 50,
+                            "description": "Receiver account name"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 12345678912,
+                            "pattern": "^[0-9]{11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Account number"
+                          }
+                        },
+                        "required": [
+                          "wallet_type",
+                          "account_name",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI Fast data",
+                        "title": "upi_fast",
+                        "properties": {
+                          "upi_address": {
+                            "type": "string",
+                            "description": "UPI address"
+                          }
+                        },
+                        "required": [
+                          "upi_address"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI Fast V data",
+                        "title": "upi_fast_v",
+                        "properties": {
+                          "upi_address": {
+                            "type": "string",
+                            "description": "UPI address"
+                          }
+                        },
+                        "required": [
+                          "upi_address"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI ARF data",
+                        "title": "upi_arf",
+                        "properties": {
+                          "upi_address": {
+                            "type": "string",
+                            "description": "UPI address"
+                          }
+                        },
+                        "required": [
+                          "upi_address"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI ARS data",
+                        "title": "upi_ars",
+                        "properties": {
+                          "upi_address": {
+                            "type": "string",
+                            "description": "UPI address"
+                          }
+                        },
+                        "required": [
+                          "upi_address"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "IMPS data",
+                        "title": "imps",
+                        "properties": {
+                          "account_name": {
+                            "type": "string",
+                            "example": "John Doe",
+                            "pattern": "^[0-9a-zA-Z\\s]{0,30}$",
+                            "maximum": 30,
+                            "description": "Receiver account name"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 123456789,
+                            "pattern": "^[0-9]+$",
+                            "description": "Receiver account number"
+                          },
+                          "bank_code": {
+                            "type": "string",
+                            "example": "BKID0000001",
+                            "pattern": "^[A-Z]{4}0[A-Z0-9]{6}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "IFSC code bank"
+                          }
+                        },
+                        "required": [
+                          "account_name",
+                          "account_number",
+                          "bank_code"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "PAYTM S data",
+                        "title": "paytm_s",
+                        "properties": {
+                          "account_email": {
+                            "type": "string",
+                            "example": "johndoe@gmail.com",
+                            "maximum": 100,
+                            "description": "Receiver account email"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 243874227,
+                            "pattern": "^0[0-9]{11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Receiver account number"
+                          }
+                        },
+                        "required": [
+                          "account_email",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Nagad data",
+                        "title": "nagad",
+                        "properties": {
+                          "account_email": {
+                            "type": "string",
+                            "example": "johndoe@gmail.com",
+                            "maximum": 100,
+                            "description": "Receiver account email"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 243874227,
+                            "pattern": "^0[0-9]{11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Receiver account number"
+                          }
+                        },
+                        "required": [
+                          "account_email",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "BKash data",
+                        "title": "bkash",
+                        "properties": {
+                          "account_email": {
+                            "type": "string",
+                            "example": "johndoe@gmail.com",
+                            "maximum": 100,
+                            "description": "Receiver account email"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 243874227,
+                            "pattern": "^0[0-9]{11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Receiver account number"
+                          }
+                        },
+                        "required": [
+                          "account_email",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "BKash_a data",
+                        "title": "bkash_a",
+                        "properties": {
+                          "account_email": {
+                            "type": "string",
+                            "example": "johndoe@gmail.com",
+                            "maximum": 100,
+                            "description": "Receiver account email"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 243874227,
+                            "pattern": "^0[0-9]{11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Receiver account number"
+                          }
+                        },
+                        "required": [
+                          "account_email",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPI p2p data",
+                        "title": "upi_p2p",
+                        "properties": {
+                          "account_email": {
+                            "type": "string",
+                            "example": "johndoe@gmail.com",
+                            "maximum": 100,
+                            "description": "Receiver account email"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 243874227,
+                            "pattern": "^0[0-9]{11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Receiver account number"
+                          }
+                        },
+                        "required": [
+                          "account_email",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "ApayBDT data",
+                        "title": "apaybdt",
+                        "properties": {
+                          "account_email": {
+                            "type": "string",
+                            "example": "johndoe@gmail.com",
+                            "maximum": 100,
+                            "description": "Receiver account email"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 243874227,
+                            "pattern": "^0[0-9]{11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Receiver account number"
+                          }
+                        },
+                        "required": [
+                          "account_email",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "UPAY data",
+                        "title": "upay",
+                        "properties": {
+                          "account_email": {
+                            "type": "string",
+                            "example": "johndoe@gmail.com",
+                            "maximum": 100,
+                            "description": "Receiver account email"
+                          },
+                          "account_number": {
+                            "type": "string",
+                            "example": 243874227,
+                            "pattern": "^0[0-9]{11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Receiver account number"
+                          }
+                        },
+                        "required": [
+                          "account_email",
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Payme data",
+                        "title": "payme",
+                        "properties": {
+                          "card_number": {
+                            "type": "string",
+                            "example": 1234123412341234,
+                            "pattern": "^[0-9]{16}$",
+                            "minimum": 16,
+                            "maximum": 16,
+                            "description": "Card number"
+                          }
+                        },
+                        "required": [
+                          "card_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Nagad API V",
+                        "title": "nagad_api_v",
+                        "properties": {
+                          "account_number": {
+                            "type": "string",
+                            "example": 12345678912,
+                            "pattern": "^[0-9]{11,11}$",
+                            "minimum": 11,
+                            "maximum": 11,
+                            "description": "Account number"
+                          }
+                        },
+                        "required": [
+                          "account_number"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "description": "Paytm data",
+                        "title": "paytm",
+                        "properties": {
+                          "account_number": {
+                            "type": "string",
+                            "example": 1234567890,
+                            "pattern": "^[0-9]{10}$",
+                            "minimum": 10,
+                            "maximum": 10,
+                            "description": "Receiver account number"
+                          }
+                        },
+                        "required": [
+                          "account_number"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Success",
+                      "required": [
+                        "success",
+                        "status",
+                        "order_id"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true,
+                          "description": "`true` if there are no errors"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Pending",
+                            "Success",
+                            "Failed"
+                          ],
+                          "example": "Pending",
+                          "description": "Withdrawal status"
+                        },
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Withdrawal ID in the A-Pay system"
+                        },
+                        "data": {
+                          "type": "object",
+                          "description": "Payment system specific data"
+                        }
+                      }
+                    },
+                    {
+                      "title": "Error",
+                      "required": [
+                        "success",
+                        "message",
+                        "code"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false,
+                          "description": "`false` if an error occurred"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid request",
+                          "description": "Description of error"
+                        },
+                        "code": {
+                          "type": "number",
+                          "example": 400,
+                          "description": "Error code in the A-pay system"
+                        },
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Withdrawal ID in the A-Pay system"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Remotes/withdrawal-info": {
+      "get": {
+        "security": [
+          {
+            "apikey": []
+          }
+        ],
+        "tags": [
+          "Withdrawal"
+        ],
+        "summary": "Withdrawal information",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "project_id",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Project ID in the A-Pay system",
+            "example": 123,
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "order_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Deposit ID in the A-Pay system",
+            "example": "7fa13dbc3b79e05e",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Success",
+                      "required": [
+                        "success",
+                        "status",
+                        "order_id",
+                        "amount",
+                        "currency",
+                        "payment_system",
+                        "created_at"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true,
+                          "description": "`true` if there are no errors"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Pending",
+                            "Success",
+                            "Failed",
+                            "Rejected"
+                          ],
+                          "example": "Success",
+                          "description": "Withdrawal status"
+                        },
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Withdrawal ID in the A-Pay system"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "description": "Withdrawal amount",
+                          "example": 10
+                        },
+                        "currency": {
+                          "type": "string",
+                          "example": "INR"
+                        },
+                        "payment_system": {
+                          "type": "string",
+                          "enum": [
+                            "mpesa",
+                            "bankalfalah",
+                            "easypaisa",
+                            "easypaisa_v",
+                            "upi_fast",
+                            "upi_fast_v",
+                            "upi_arf",
+                            "upi_ars",
+                            "imps",
+                            "paytm_s",
+                            "nagad",
+                            "bkash",
+                            "bkash_a",
+                            "upi_p2p",
+                            "apaybdt",
+                            "upay",
+                            "payme",
+                            "nagad_api_v",
+                            "paytm"
+                          ],
+                          "example": "mpesa",
+                          "description": "Name of the payment system in A-Pay"
+                        },
+                        "custom_transaction_id": {
+                          "type": "string",
+                          "maximum": 200,
+                          "example": "custom123",
+                          "description": "Transaction ID in the client's system"
+                        },
+                        "custom_user_id": {
+                          "type": "string",
+                          "maximum": 200,
+                          "example": "user123",
+                          "description": "User ID in the client's system"
+                        },
+                        "created_at": {
+                          "type": "integer",
+                          "example": 1665135515,
+                          "description": "Withdrawal creation time in timestamp format"
+                        }
+                      }
+                    },
+                    {
+                      "title": "Error",
+                      "required": [
+                        "success",
+                        "message",
+                        "code"
+                      ],
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": false,
+                          "description": "`false` if an error occurred"
+                        },
+                        "code": {
+                          "type": "number",
+                          "example": 400,
+                          "description": "Error code in the A-pay system"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid request",
+                          "description": "Description of error"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apikey": {
+        "type": "apiKey",
+        "name": "apikey",
+        "in": "header"
+      }
+    }
+  },
+  "x-webhooks": {
+    "DepositWebhook": {
+      "post": {
+        "summary": "Deposit",
+        "operationId": "DepositWebhook",
+        "tags": [
+          "Webhooks"
+        ],
+        "description": "Signature generation (signature)\n\nWhen sending webhooks A-Pay also sends signature: specifically generated hash string that is created using a private key.\n\nThe signature itself is calculated as follows:\n\n```php\n$signature = sha1($access_key . $private_key . md5($transactions->toJson(JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));\n```\n\na string of three parameters is passed to the sha1 function:\n| Parameter    | Description                                                            |\n|--------------|------------------------------------------------------------------------|\n| $access_key  | The public key is specified in the settings of the A-Pay technical support personal account |\n| $private_key | The private key is specified in the settings of the A-Pay technical support personal account |\n| md5(...)     | Hash from the MD5 function of the entire array of transactions in JSON format             |\n\nAs a result of executing this code, a string is obtained that cannot be faked without having a private key that is not passed in webhooks.\n\nThe client can compare the generated signature with the received signature from the webhook and thereby make sure that the data that came was actually sent, and not faked by scammer.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "access_key",
+                  "signature",
+                  "transactions"
+                ],
+                "properties": {
+                  "access_key": {
+                    "type": "string",
+                    "example": "mrOYReXJphqo7lkL",
+                    "description": "The access key is specified in the settings of the A-Pay technical support personal account"
+                  },
+                  "signature": {
+                    "type": "string",
+                    "example": "dfsfrwe3344d",
+                    "description": "The signature used to verify the validity of the postback. Concept of generation in the description of the deposit webhook"
+                  },
+                  "transactions": {
+                    "description": "Information about the deposits made (one or more) is passed.",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "order_id",
+                        "status",
+                        "amount",
+                        "currency",
+                        "payment_system",
+                        "created_at",
+                        "activated_at"
+                      ],
+                      "properties": {
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Deposit ID in the A-Pay system"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Success",
+                            "Failed",
+                            "Rejected"
+                          ],
+                          "description": "Deposit status, if the deposit was successful, the status will be `Success`"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 6008.39,
+                          "minimum": 0,
+                          "description": "Deposit amount"
+                        },
+                        "currency": {
+                          "type": "string",
+                          "minimum": 3,
+                          "maximum": 3,
+                          "example": "INR",
+                          "description": "Currency name"
+                        },
+                        "payment_system": {
+                          "type": "string",
+                          "enum": [
+                            "mpesa",
+                            "easypaisa",
+                            "easypaisa_v",
+                            "bankalfalah",
+                            "upi_fast",
+                            "upi_fast_v",
+                            "upi_arf",
+                            "upi_ars",
+                            "paytm_s",
+                            "nagad",
+                            "bkash",
+                            "bkash_a",
+                            "upi_p2p",
+                            "apaybdt",
+                            "upay",
+                            "nagad_api_v",
+                            "payme",
+                            "paytm",
+                            "phonepe",
+                            "upi_a",
+                            "upi_fr",
+                            "upi_p",
+                            "upi_b"
+                          ],
+                          "example": "mpesa",
+                          "description": "The payment system from which the deposit was made"
+                        },
+                        "custom_transaction_id": {
+                          "type": "string",
+                          "description": "Transaction ID in the client's system"
+                        },
+                        "custom_user_id": {
+                          "type": "string",
+                          "description": "User ID in the client's system"
+                        },
+                        "created_at": {
+                          "type": "integer",
+                          "example": 1665731710,
+                          "description": "Deposit creation time, in timestamp UTC format"
+                        },
+                        "activated_at": {
+                          "type": "integer",
+                          "example": 1665731710,
+                          "description": "Deposit activation date, in timestamp UTC format"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "If `{\"status\":\"OK\"}` was passed we consider webhook successfully delivered.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "status"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK",
+                      "description": "If `OK` was passed we consider webhook successfully delivered."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "WithdrawalWebhook": {
+      "post": {
+        "summary": "Withdrawal",
+        "operationId": "WithdrawalWebhook",
+        "tags": [
+          "Webhooks"
+        ],
+        "description": "Signature generation (signature)\n\nWhen sending webhooks A-Pay also sends signature: specifically generated hash string that is created using a private key.\n\nThe signature itself is calculated as follows:\n\n```php\n$signature = sha1($access_key . $private_key . md5($transactions->toJson(JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));\n```\n\na string of three parameters is passed to the sha1 function:\n| Parameter    | Description                                                            |\n|--------------|------------------------------------------------------------------------|\n| $access_key  | The public key is specified in the settings of the A-Pay technical support personal account |\n| $private_key | The private key is specified in the settings of the A-Pay technical support personal account |\n| md5(...)     | Hash from the MD5 function of the entire array of transactions in JSON format             |\n\nAs a result of executing this code, a string is obtained that cannot be faked without having a private key that is not passed in webhooks.\n\nThe client can compare the generated signature with the received signature from the webhook and thereby make sure that the data that came was actually sent, and not faked by scammer.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "access_key",
+                  "signature",
+                  "transactions"
+                ],
+                "properties": {
+                  "access_key": {
+                    "type": "string",
+                    "example": "mrOYReXJphqo7lkL",
+                    "description": "The access key is specified in the settings of the A-Pay technical support personal account"
+                  },
+                  "signature": {
+                    "type": "string",
+                    "example": "dfsfrwe3344d",
+                    "description": "The signature used to verify the validity of the postback. Concept of generation in the description of the deposit webhook"
+                  },
+                  "transactions": {
+                    "description": "Information about the deposits made (one or more) is passed.",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "order_id",
+                        "status",
+                        "amount",
+                        "currency",
+                        "payment_system",
+                        "created_at",
+                        "activated_at"
+                      ],
+                      "properties": {
+                        "order_id": {
+                          "type": "string",
+                          "example": "7fa13dbc3b79e05e",
+                          "description": "Withdrawal ID in the A-Pay system"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Success",
+                            "Failed",
+                            "Rejected"
+                          ],
+                          "description": "Withdrawal status, if the withdrawal was successful, the status will be `Success`"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 6008.39,
+                          "minimum": 0,
+                          "description": "Withdrawal amount"
+                        },
+                        "currency": {
+                          "type": "string",
+                          "minimum": 3,
+                          "maximum": 3,
+                          "example": "INR",
+                          "description": "Currency name"
+                        },
+                        "payment_system": {
+                          "type": "string",
+                          "enum": [
+                            "mpesa",
+                            "easypaisa",
+                            "easypaisa_v",
+                            "bankalfalah",
+                            "upi_fast",
+                            "upi_arf",
+                            "upi_ars",
+                            "imps",
+                            "paytm_s",
+                            "nagad",
+                            "bkash",
+                            "bkash_a",
+                            "upi_p2p",
+                            "apaybdt",
+                            "upay",
+                            "payme",
+                            "nagad_api_v",
+                            "paytm"
+                          ],
+                          "example": "mpesa",
+                          "description": "The payment system from which the deposit was made"
+                        },
+                        "custom_transaction_id": {
+                          "type": "string",
+                          "description": "Transaction ID in the client's system"
+                        },
+                        "custom_user_id": {
+                          "type": "string",
+                          "description": "User ID in the client's system"
+                        },
+                        "created_at": {
+                          "type": "integer",
+                          "example": 1665731710,
+                          "description": "Deposit creation time, in timestamp UTC format"
+                        },
+                        "activated_at": {
+                          "type": "integer",
+                          "example": 1665731710,
+                          "description": "Deposit activation date, in timestamp UTC format"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "If `{\"status\":\"OK\"}` was passed we consider webhook successfully delivered.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "status"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK",
+                      "description": "If `OK` was passed we consider webhook successfully delivered."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

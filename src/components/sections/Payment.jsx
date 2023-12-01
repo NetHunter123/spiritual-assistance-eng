@@ -9,11 +9,13 @@ import {
 import ContactButton from "@/components/ContactButton";
 import useMediaQueries from "@/utils/useMediaQueries";
 import Button from "@/components/Button";
+import Apay from "@/../api/openapi"
 
 const Payment = ({}) => {
   const md = useMediaQueries("md");
   const lg = useMediaQueries("lg");
 
+  console.log("Apay",`${Apay.servers.url}`);
   return (
     <>
       <div className="container relative">
