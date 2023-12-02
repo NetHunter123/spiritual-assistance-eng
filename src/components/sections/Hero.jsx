@@ -88,7 +88,7 @@ const Hero = () => {
                 <div className="animate-ping max-w-[200px] absolute top-[0px] bottom-0 left-0 right-0 bg-primary rounded-[10px] z-0 "></div>
                 <Button
                   text={"Book a session!"}
-                  link={"#"}
+                  link={"https://wa.me/918001184963"}
                   place={"hero"}
                 />
               </div>
