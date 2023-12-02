@@ -52,13 +52,13 @@ const Hero = () => {
                   alt="animation"
                 />
                 <div className="absolute left-0 top-0 right-0 bottom-0 flex justify-center items-center">
-                <Image
-                  height={lg ? 314 : md ? 230 : 230}
-                  width={lg ? 314 : md ? 230 : 230}
-                  withPlaceholder
-                  src="./app-logo.webp"
-                  alt="animation"
-                />
+                  <Image
+                    height={lg ? 314 : md ? 230 : 230}
+                    width={lg ? 314 : md ? 230 : 230}
+                    withPlaceholder
+                    src="./app-logo.webp"
+                    alt="animation"
+                  />
                 </div>
               </div>
             </div>
@@ -85,12 +85,14 @@ const Hero = () => {
                 variant={"outline"}
               /> */}
               <div className="relative">
-                <div className="animate-ping max-w-[200px] absolute top-[0px] bottom-0 left-0 right-0 bg-primary rounded-[10px] z-0 "></div>
-                <Button
-                  text={"Book a session!"}
-                  link={"https://wa.me/918001184963"}
-                  place={"hero"}
-                />
+                <div className="animate-ping max-w-[200px] absolute top-[0px] bottom-0 left-0 right-0 bg-primary rounded-[10px] z-10 "></div>
+                <div className="relative z-20">
+                  <Button
+                    text={"Book a session!"}
+                    link={"https://wa.me/918001184963"}
+                    place={"hero"}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -114,7 +116,7 @@ const Hero = () => {
                   src="./app-logo.webp"
                   alt="animation"
                 />
-                </div>
+              </div>
             </div>
           </div>
         </div>

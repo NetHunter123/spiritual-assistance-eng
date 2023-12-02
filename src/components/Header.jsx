@@ -9,7 +9,7 @@ const Header = () => {
         <div className="relative w-fit flex">
           <Nav/>
           <div className="ml-[10px] xl:absolute right-[-200px] xl:right-[-235px] ">
-            {/* <Button text={"Связаться со мной"} link={"contacts"}/> */}
+            {/* <Button text={"Связаться со мной"} link={"#contacts"}/> */}
           </div>
         </div>
     </header>
