@@ -55,7 +55,7 @@ const Payment = ({}) => {
               {/* <Button text={"Оплата"} link={"#payment"} place={"hero"} /> */}
               <a
                 className={`animate-bounce block text-center   bg-primary text-textBlack h-btn text-[22px] min-w-[260px] w-[100%]  px-[10px] rounded-md leading-btn font-medium`}
-                href={`#`}
+                href={`https://payment-spiritual-assistance.vercel.app`}
               >
                 {"Payment"}
               </a>
