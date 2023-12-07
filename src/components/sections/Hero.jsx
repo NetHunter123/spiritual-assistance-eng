@@ -89,7 +89,7 @@ const Hero = () => {
                 <div className="relative z-20">
                   <Button
                     text={"Book a session!"}
-                    link={"https://wa.me/918001184963"}
+                    link={"https://wa.me/917869738218"}
                     place={"hero"}
                   />
                 </div>

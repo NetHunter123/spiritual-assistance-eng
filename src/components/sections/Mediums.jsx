@@ -9,6 +9,9 @@ import {
 import { Image, Button, rem } from "@mantine/core";
 
 const Services = () => {
+
+const linkWhatsApp="https://wa.me/917869738218"
+
   const mediums = [
     {
       value: "nahata",
@@ -17,7 +20,7 @@ const Services = () => {
       chats: [
         {
           text: "WhatsApp",
-          link: "https://wa.me/918001184963",
+          link: linkWhatsApp,
           icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
         },
         {
@@ -35,7 +38,7 @@ const Services = () => {
       chats: [
         {
           text: "WhatsApp",
-          link: "https://wa.me/918001184963",
+          link: linkWhatsApp,
           icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
         },
         {
@@ -53,7 +56,7 @@ const Services = () => {
       chats: [
         {
           text: "WhatsApp",
-          link: "https://wa.me/918001184963",
+          link: linkWhatsApp,
           icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
         },
         {
@@ -71,7 +74,7 @@ const Services = () => {
       chats: [
         {
           text: "WhatsApp",
-          link: "https://wa.me/918001184963",
+          link: linkWhatsApp,
           icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
         },
         {
