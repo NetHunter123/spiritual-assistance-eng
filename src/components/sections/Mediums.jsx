@@ -10,7 +10,7 @@ import { Image, Button, rem } from "@mantine/core";
 
 const Services = () => {
 
-const linkWhatsApp="https://wa.me/917869738218"
+const linkWhatsApp="https://wa.me/66969729918"
 
   const mediums = [
     {
