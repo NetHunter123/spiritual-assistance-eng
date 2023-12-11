@@ -86,10 +86,11 @@ const Hero = () => {
               /> */}
               <div className="relative">
                 <div className="animate-ping max-w-[200px] absolute top-[0px] bottom-0 left-0 right-0 bg-primary rounded-[10px] z-10 "></div>
-                <div className="relative z-20">
+                <div className="relative z-10">
                   <Button
                     text={"Book a session!"}
-                    link={"https://wa.me/380933260391"}
+                    // link={"https://wa.me/380933260391"}
+                    link={"https://t.me/+919668310153"}
                     place={"hero"}
                   />
                 </div>

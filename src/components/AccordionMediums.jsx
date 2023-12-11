@@ -115,7 +115,7 @@ const AccordionMediums = ({ mediums }) => {
 
                 <a
                   className="ripple flex leading-[15px] items-center relative cursor-pointer font-[500] w-fit py-[8px] px-[10px] rounded-[8px] mt-[25px] bg-primary text-[black]"
-                  href={medium.chats[1].link}
+                  href={medium.chats[0].link}
                 >
                   Contact Medium
                   <span className="flex ml-[5px] items-center h-[15px] overflow-hidden">

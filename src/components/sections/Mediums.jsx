@@ -18,11 +18,11 @@ const linkWhatsApp="https://wa.me/380933260391"
       name: "Punit Nahata",
       avatar: "./punit_nahata.jpg",
       chats: [
-        {
-          text: "WhatsApp",
-          link: linkWhatsApp,
-          icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
-        },
+        // {
+        //   text: "WhatsApp",
+        //   link: linkWhatsApp,
+        //   icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
+        // },
         {
           text: "Telegram",
           link: "https://t.me/+919668310153",
@@ -36,11 +36,11 @@ const linkWhatsApp="https://wa.me/380933260391"
       name: "Archena Nagabushanam",
       avatar: "./archena_nagabushanam.jpg",
       chats: [
-        {
-          text: "WhatsApp",
-          link: linkWhatsApp,
-          icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
-        },
+        // {
+        //   text: "WhatsApp",
+        //   link: linkWhatsApp,
+        //   icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
+        // },
         {
           text: "Telegram",
           link: "https://t.me/+919668310153",
@@ -54,11 +54,11 @@ const linkWhatsApp="https://wa.me/380933260391"
       name: "Anuradha Verma",
       avatar: "./anuradha_verma.jpg",
       chats: [
-        {
-          text: "WhatsApp",
-          link: linkWhatsApp,
-          icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
-        },
+        // {
+        //   text: "WhatsApp",
+        //   link: linkWhatsApp,
+        //   icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
+        // },
         {
           text: "Telegram",
           link: "https://t.me/+919668310153",
@@ -72,11 +72,11 @@ const linkWhatsApp="https://wa.me/380933260391"
       name: "Shiva Sri Gurukkal",
       avatar: "./shiva_sri_gurukkal.jpg",
       chats: [
-        {
-          text: "WhatsApp",
-          link: linkWhatsApp,
-          icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
-        },
+        // {
+        //   text: "WhatsApp",
+        //   link: linkWhatsApp,
+        //   icon: <IconBrandWhatsapp strokeWidth={1.7} size={rem(40)} />,
+        // },
         {
           text: "Telegram",
           link: "https://t.me/+919668310153",
