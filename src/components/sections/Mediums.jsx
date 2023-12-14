@@ -11,6 +11,7 @@ import { Image, Button, rem } from "@mantine/core";
 const Services = () => {
 
 const linkWhatsApp="https://wa.me/77753790229"
+const linkTG="https://t.me/your_medium"
 
   const mediums = [
     {
@@ -25,7 +26,7 @@ const linkWhatsApp="https://wa.me/77753790229"
         },
         {
           text: "Telegram",
-          link: "https://t.me/+919668310153",
+          link: linkTG,
           icon: <IconBrandTelegram strokeWidth={1.7} size={rem(40)} />,
         },
       ],
@@ -43,7 +44,7 @@ const linkWhatsApp="https://wa.me/77753790229"
         },
         {
           text: "Telegram",
-          link: "https://t.me/+919668310153",
+          link: linkTG,
           icon: <IconBrandTelegram strokeWidth={1.7} size={rem(40)} />,
         },
       ],
@@ -61,7 +62,7 @@ const linkWhatsApp="https://wa.me/77753790229"
         },
         {
           text: "Telegram",
-          link: "https://t.me/+919668310153",
+          link: linkTG,
           icon: <IconBrandTelegram strokeWidth={1.7} size={rem(40)} />,
         },
       ],
@@ -79,7 +80,7 @@ const linkWhatsApp="https://wa.me/77753790229"
         },
         {
           text: "Telegram",
-          link: "https://t.me/+919668310153",
+          link: linkTG,
           icon: <IconBrandTelegram strokeWidth={1.7} size={rem(40)} />,
         },
       ],
