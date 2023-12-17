@@ -5,7 +5,7 @@ import {theme} from "../../tailwind.config";
 import Nav from "@/components/Nav";
 import ContactButton from "@/components/ContactButton";
  
-const SideMenu = ({contacts}) => {
+const SideMenu = () => {
   const [opened, {open, close}] = useDisclosure(false);
   // const useStyles = createStyles((theme) => ({
   //   wrapper: {

@@ -9,7 +9,9 @@ export default class _Document extends Document {
   render() {
     return (
       <Html>
-        <Head lang={"ru"}/>
+        <Head lang={"ru"}>
+         
+        </Head>
         <body>
         <Main/>
         <NextScript/>
