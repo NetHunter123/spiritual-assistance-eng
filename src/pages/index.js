@@ -13,7 +13,7 @@ import {IconBrandFacebook, IconBrandInstagram, IconBrandTelegram, IconBrandWhats
 import {rem} from "@mantine/core";
 import Hotjar from '@hotjar/browser';
 
-const siteId = 3798039;
+const siteId = 3798247;
 const hotjarVersion = 6;
 
 
