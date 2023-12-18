@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import 'react-medium-image-zoom/dist/styles.css'
 import Head from "next/head";
 import {MantineProvider} from '@mantine/core'
+import { Hotjar } from "nextjs-hotjar";
 
 
 export default function App({Component, pageProps}) {
@@ -17,6 +18,7 @@ const YOUR_APP_SCRIPT_VERSION = 6;
       />
     </Head>
     <Hotjar id={YOUR_APP_ID} sv={YOUR_APP_SCRIPT_VERSION} />
+
     <MantineProvider
       withGlobalStyles
       withNormalizeCSS
@@ -49,7 +51,6 @@ const YOUR_APP_SCRIPT_VERSION = 6;
 
       }}
     >
-      
       <Component {...pageProps} />
     </MantineProvider>
   </>
