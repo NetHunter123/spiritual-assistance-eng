@@ -13,14 +13,14 @@ import {IconBrandFacebook, IconBrandInstagram, IconBrandTelegram, IconBrandWhats
 import {rem} from "@mantine/core";
 import Hotjar from '@hotjar/browser';
 
-const siteId = 3798247;
-const hotjarVersion = 6;
+// const siteId = 3798247;
+// const hotjarVersion = 6;
 
 
 const montserrat = Montserrat({subsets: ['cyrillic']})
 
 export default function Home() {
-  Hotjar.init(siteId, hotjarVersion);
+  // Hotjar.init(siteId, hotjarVersion);
 
   const contacts = [
     {

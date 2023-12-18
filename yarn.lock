@@ -1107,6 +1107,11 @@ next@13.4.7:
     "@next/swc-win32-ia32-msvc" "13.4.7"
     "@next/swc-win32-x64-msvc" "13.4.7"
 
+nextjs-hotjar@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/nextjs-hotjar/-/nextjs-hotjar-1.2.0.tgz#a6ac9b6ca194b465168ef53e11ba35daf82c4921"
+  integrity sha512-T0vBmModSXxAgv9e22T5aFbE1fhwuuAnq17ok+ZwnjnUePGL/p760Abag6NUhLLsJLE0wR7yASoRauFsi0AL0Q==
+
 node-releases@^2.0.12:
   version "2.0.12"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.12.tgz#35627cc224a23bfb06fb3380f2b3afaaa7eb1039"

@@ -21,6 +21,7 @@
     "embla-carousel-autoplay": "^8.0.0-rc07",
     "embla-carousel-react": "7",
     "next": "13.4.7",
+    "nextjs-hotjar": "^1.2.0",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",

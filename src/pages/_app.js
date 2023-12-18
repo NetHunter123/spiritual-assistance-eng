@@ -5,6 +5,9 @@ import {MantineProvider} from '@mantine/core'
 
 
 export default function App({Component, pageProps}) {
+const YOUR_APP_ID = 3798247;
+const YOUR_APP_SCRIPT_VERSION = 6;
+
   return <>
     <Head>
       <title>Page title</title>
@@ -13,7 +16,7 @@ export default function App({Component, pageProps}) {
         content='minimum-scale=1, initial-scale=1, width=device-width'
       />
     </Head>
-
+    <Hotjar id={YOUR_APP_ID} sv={YOUR_APP_SCRIPT_VERSION} />
     <MantineProvider
       withGlobalStyles
       withNormalizeCSS
@@ -46,6 +49,7 @@ export default function App({Component, pageProps}) {
 
       }}
     >
+      
       <Component {...pageProps} />
     </MantineProvider>
   </>
